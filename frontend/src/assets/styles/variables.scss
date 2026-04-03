@@ -1,0 +1,111 @@
+// Colors
+:root {
+  // Primary colors
+  --claw-primary: #0ea5e9;
+  --claw-primary-light: #38bdf8;
+  --claw-primary-dark: #0284c7;
+  
+  // Secondary colors
+  --claw-secondary: #6366f1;
+  --claw-secondary-light: #818cf8;
+  --claw-secondary-dark: #4f46e5;
+  
+  // Accent colors
+  --claw-accent: #f59e0b;
+  --claw-success: #10b981;
+  --claw-warning: #f59e0b;
+  --claw-danger: #ef4444;
+  
+  // Neutral colors - Light theme
+  --claw-bg-primary: #ffffff;
+  --claw-bg-secondary: #f8fafc;
+  --claw-bg-tertiary: #f1f5f9;
+  --claw-text-primary: #0f172a;
+  --claw-text-secondary: #475569;
+  --claw-text-tertiary: #94a3b8;
+  --claw-border: #e2e8f0;
+  --claw-border-light: #f1f5f9;
+  
+  // Shadows
+  --claw-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --claw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --claw-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --claw-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  // Border radius
+  --claw-radius-sm: 4px;
+  --claw-radius: 8px;
+  --claw-radius-md: 12px;
+  --claw-radius-lg: 16px;
+  --claw-radius-xl: 24px;
+  
+  // Spacing
+  --claw-spacing-xs: 4px;
+  --claw-spacing-sm: 8px;
+  --claw-spacing: 16px;
+  --claw-spacing-md: 24px;
+  --claw-spacing-lg: 32px;
+  --claw-spacing-xl: 48px;
+  
+  // Layout
+  --claw-header-height: 64px;
+  --claw-sidebar-width: 240px;
+  --claw-max-content-width: 1280px;
+}
+
+// Dark theme
+.dark {
+  --claw-bg-primary: #0f172a;
+  --claw-bg-secondary: #1e293b;
+  --claw-bg-tertiary: #334155;
+  --claw-text-primary: #f8fafc;
+  --claw-text-secondary: #cbd5e1;
+  --claw-text-tertiary: #64748b;
+  --claw-border: #334155;
+  --claw-border-light: #1e293b;
+  
+  --claw-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --claw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --claw-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --claw-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+}
+
+// Breakpoints
+$breakpoints: (
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+  '2xl': 1536px
+);
+
+// Mixins
+@mixin respond-to($breakpoint) {
+  @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin card {
+  background: var(--claw-bg-primary);
+  border: 1px solid var(--claw-border);
+  border-radius: var(--claw-radius);
+  box-shadow: var(--claw-shadow-sm);
+  transition: box-shadow 0.2s ease;
+  
+  &:hover {
+    box-shadow: var(--claw-shadow-md);
+  }
+}
