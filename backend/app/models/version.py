@@ -99,7 +99,7 @@ class Version(Base, SoftDeleteMixin):
     )
     
     # 元数据
-    metadata: Mapped[dict] = mapped_column(
+    extra_metadata: Mapped[dict] = mapped_column(
         JSONB,
         default=dict,
         nullable=False,

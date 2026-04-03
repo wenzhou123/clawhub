@@ -43,6 +43,7 @@ lobster_tag = Table(
     Base.metadata,
     Column("lobster_id", PGUUID(as_uuid=True), ForeignKey("lobster.id", ondelete="CASCADE"), primary_key=True),
     Column("tag_id", PGUUID(as_uuid=True), ForeignKey("tag.id", ondelete="CASCADE"), primary_key=True),
+    extend_existing=True,
 )
 
 
@@ -351,7 +352,7 @@ class Download(Base):
 
 class LobsterImage(Base):
     """Lobster 截图/图片模型"""
-    
+
     lobster_id: Mapped[UUID] = mapped_column(
         PGUUID(as_uuid=True),
         ForeignKey("lobster.id", ondelete="CASCADE"),
@@ -374,30 +375,14 @@ class LobsterImage(Base):
         default=False,
         nullable=False,
     )
-    
+
     # 关系
     lobster: Mapped["Lobster"] = relationship("Lobster", back_populates="images")
-    
+
     # 索引
     __table_args__ = (
         Index("idx_lobster_image_order", "lobster_id", "order"),
     )
-    
+
     def __repr__(self) -> str:
         return f"<LobsterImage(lobster={self.lobster_id}, order={self.order})>"
-
-
-class LobsterTag(Base):
-    """Lobster-Tag 关联模型（显式定义用于类型提示）"""
-    __tablename__ = "lobster_tag"
-    
-    lobster_id: Mapped[UUID] = mapped_column(
-        PGUUID(as_uuid=True),
-        ForeignKey("lobster.id", ondelete="CASCADE"),
-        primary_key=True,
-    )
-    tag_id: Mapped[UUID] = mapped_column(
-        PGUUID(as_uuid=True),
-        ForeignKey("tag.id", ondelete="CASCADE"),
-        primary_key=True,
-    )

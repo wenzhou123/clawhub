@@ -97,3 +97,39 @@ class LobsterSearchQuery(BaseModel):
     order: str = Field("desc", pattern=r"^(asc|desc)$")
     page: int = Field(1, ge=1)
     page_size: int = Field(20, ge=1, le=100)
+
+
+class TagBase(BaseModel):
+    """标签基础 Schema"""
+    name: str = Field(..., min_length=1, max_length=50, description="标签名称")
+    description: Optional[str] = Field(None, max_length=500, description="标签描述")
+    color: Optional[str] = Field(None, pattern=r"^#[0-9a-fA-F]{6}$", description="十六进制颜色代码")
+
+
+class TagResponse(TagBase):
+    """标签响应"""
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
+    lobsters_count: int = 0
+
+
+class StarResponse(BaseModel):
+    """收藏响应"""
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
+    user_id: UUID
+    lobster_id: UUID
+    created_at: datetime
+
+
+class DownloadResponse(BaseModel):
+    """下载响应"""
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
+    lobster_id: UUID
+    version_id: Optional[UUID]
+    user_id: Optional[UUID]
+    downloaded_at: datetime

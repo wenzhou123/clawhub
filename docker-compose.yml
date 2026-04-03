@@ -103,8 +103,7 @@ services:
       SECRET_KEY: ${SECRET_KEY:-your-super-secret-key-change-in-production}
       ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
       REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS:-7}
-      # CORS 配置
-      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost:3000}
+      # CORS 配置使用代码默认值
       # 日志配置
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
     volumes:
@@ -123,8 +122,8 @@ services:
       - clawhub-network
     command: >
       sh -c "
-      uv run alembic upgrade head &&
-      uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      alembic upgrade head &&
+      uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
       "
 
   # 前端开发服务器
@@ -132,7 +131,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      target: development
     container_name: clawhub-frontend
     restart: unless-stopped
     environment:
@@ -148,7 +146,7 @@ services:
       - backend
     networks:
       - clawhub-network
-    command: npm run dev -- --host 0.0.0.0
+    command: npm run dev -- --host 0.0.0.0 --port 5173
 
   # Nginx 反向代理（生产环境使用）
   nginx:

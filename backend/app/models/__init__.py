@@ -2,7 +2,7 @@
 from app.db.base import Base
 from app.models.user import User, APIKey, UserFollow
 from app.models.organization import Organization, OrganizationMember
-from app.models.lobster import Lobster, LobsterTag, Tag, Star, Download, LobsterImage
+from app.models.lobster import Lobster, Tag, Star, Download, LobsterImage
 from app.models.version import Version
 from app.models.comment import Comment, CommentReaction
 from app.models.audit import AuditLog
@@ -16,7 +16,6 @@ __all__ = [
     "Organization",
     "OrganizationMember",
     "Lobster",
-    "LobsterTag",
     "Tag",
     "Version",
     "Star",

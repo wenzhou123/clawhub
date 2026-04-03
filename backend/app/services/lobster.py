@@ -9,7 +9,8 @@ from fastapi import UploadFile
 from sqlalchemy import select, func, desc, asc
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.lobster import Lobster, LobsterVersion, Star
+from app.models.lobster import Lobster, Star
+from app.models.version import Version
 from app.schemas.lobster import LobsterCreate, LobsterUpdate
 
 
@@ -132,12 +133,12 @@ class LobsterService:
         await self.db.commit()
         return True
     
-    async def get_versions(self, lobster_id: UUID) -> List[LobsterVersion]:
+    async def get_versions(self, lobster_id: UUID) -> List[Version]:
         """获取版本列表"""
         result = await self.db.execute(
-            select(LobsterVersion)
-            .where(LobsterVersion.lobster_id == lobster_id)
-            .order_by(desc(LobsterVersion.created_at))
+            select(Version)
+            .where(Version.lobster_id == lobster_id)
+            .order_by(desc(Version.created_at))
         )
         return list(result.scalars().all())
     
@@ -152,7 +153,7 @@ class LobsterService:
         # TODO: Upload file to MinIO/S3
         file_url = f"s3://clawhub/{lobster_id}/{version}.clawpack"
         
-        version_obj = LobsterVersion(
+        version_obj = Version(
             lobster_id=lobster_id,
             version=version,
             description=description,
@@ -234,9 +235,9 @@ class LobsterService:
     async def get_download_url(self, lobster_id: UUID, version: str) -> Optional[str]:
         """获取下载链接"""
         result = await self.db.execute(
-            select(LobsterVersion).where(
-                LobsterVersion.lobster_id == lobster_id,
-                LobsterVersion.version == version,
+            select(Version).where(
+                Version.lobster_id == lobster_id,
+                Version.version == version,
             )
         )
         version_obj = result.scalar_one_or_none()

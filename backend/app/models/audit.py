@@ -147,7 +147,7 @@ class AuditLog(Base):
         nullable=True,
         comment="变更后的值",
     )
-    metadata: Mapped[dict] = mapped_column(
+    extra_metadata: Mapped[dict] = mapped_column(
         JSONB,
         default=dict,
         nullable=False,
